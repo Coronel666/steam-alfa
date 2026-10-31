@@ -188,6 +188,15 @@
     -webkit-mask: var(--omega-mascara-omega) center / contain no-repeat;
     mask: var(--omega-mascara-omega) center / contain no-repeat;
   }
+
+  /* símbolo emoji/imagem (edição Alfa): figura colorida no lugar da silhueta; o plugin liga a classe */
+  &.omega-simbolo-imagem .RootMenuBar .RootMenuButton .SteamButton::before,
+  &.omega-simbolo-imagem .GameListHomeAndSearch .HomeBox .Bar .Icon::after {
+    background: var(--omega-simbolo-img) center / contain no-repeat;
+    -webkit-mask: none;
+    mask: none;
+    opacity: 1;
+  }
   .LeftListSizableContainer .SearchInput .DialogTextInputBase {
     background-color: var(--omega-vidro-claro) !important; /* só a cor: a lupa é background-image da Steam */
     border-radius: var(--omega-raio-p) !important;

@@ -99,6 +99,10 @@
     $versao = ''
     try { $versao = (Get-Content (Join-Path $raiz.FullName 'VERSAO.txt') -TotalCount 1).Trim() } catch {}
     Ok "pacote pronto $versao"
+    $antes = ''
+    try { $antes = (Get-Content (Join-Path $Base 'instalado.json') -Raw | ConvertFrom-Json).versao } catch {}
+    if ($antes -and $antes -ne $versao) { Ok "você tinha a versão $antes: é uma ATUALIZAÇÃO" }
+    elseif ($antes) { Ok 'você já está nesta versão: reinstalando por cima' }
 
     Passo 'instalando: a Steam fecha sozinha, recebe o Alfa e abre de novo (não abra jogo agora)'
     Write-Host ''
@@ -106,6 +110,8 @@
     $codigo = $LASTEXITCODE
     Write-Host ''
     if ($codigo -ne 0) { throw "o instalador parou (código $codigo). Nada ficou pela metade. O log está em $(Join-Path $Base 'logs')." }
+    # a versão instalada (o app do GameHub lê isto para mostrar "Atualização pendente")
+    try { @{ versao = $versao; quando = (Get-Date).ToString('o') } | ConvertTo-Json | Set-Content -Path (Join-Path $Base 'instalado.json') -Encoding UTF8 } catch {}
 
     Write-Host '  ╔══════════════════════════════════════════════════════════════╗' -ForegroundColor Red
     Write-Host '  ║                     ALFA INSTALADO!                          ║' -ForegroundColor Red
