@@ -1,19 +1,21 @@
 {
-  "versao": "20261031.0326",
+  "versao": "20261031.0353",
   "titulo": "Valor da família certeiro (igual em qualquer PC)",
   "itens": [
-    "Quanto a conta vale agora pega a lista da família direto da Steam: o valor de cada pessoa sai igual no seu PC e no PC dos outros",
-    "Jogo que duas pessoas têm conta para as duas (antes contava só para o dono daquele PC, e os jogos que não podem ser emprestados nem apareciam)",
-    "Abra a Loja da Steam uma vez depois de atualizar (ou clique em \"Ler a família na Steam\" na tela da conta) para buscar a lista; ela se atualiza sozinha a cada 6 horas",
+    "Quanto a conta vale agora conta cada pessoa pela lista COMPLETA de jogos do perfil dela, a mesma em qualquer PC da família (antes cada PC via só os jogos emprestáveis dos outros e o número mudava de PC pra PC)",
+    "Jogo que duas pessoas têm conta para as duas",
+    "Perfil com os jogos escondidos conta só pelos jogos que dá para emprestar e aparece com ≈",
+    "Botão \"Ler a família na Steam\" na tela da conta: abre a Loja, lê e já atualiza a tela (mostra o andamento e o erro, se der); sozinho a cada 6 horas",
     "O histórico do ranking recomeça do zero, já com os valores certos"
   ],
   "historico": [
     {
       "titulo": "Valor da família certeiro (igual em qualquer PC)",
       "itens": [
-        "Quanto a conta vale agora pega a lista da família direto da Steam: o valor de cada pessoa sai igual no seu PC e no PC dos outros",
-        "Jogo que duas pessoas têm conta para as duas (antes contava só para o dono daquele PC, e os jogos que não podem ser emprestados nem apareciam)",
-        "Abra a Loja da Steam uma vez depois de atualizar (ou clique em \"Ler a família na Steam\" na tela da conta) para buscar a lista; ela se atualiza sozinha a cada 6 horas",
+        "Quanto a conta vale agora conta cada pessoa pela lista COMPLETA de jogos do perfil dela, a mesma em qualquer PC da família (antes cada PC via só os jogos emprestáveis dos outros e o número mudava de PC pra PC)",
+        "Jogo que duas pessoas têm conta para as duas",
+        "Perfil com os jogos escondidos conta só pelos jogos que dá para emprestar e aparece com ≈",
+        "Botão \"Ler a família na Steam\" na tela da conta: abre a Loja, lê e já atualiza a tela (mostra o andamento e o erro, se der); sozinho a cada 6 horas",
         "O histórico do ranking recomeça do zero, já com os valores certos"
       ]
     },
