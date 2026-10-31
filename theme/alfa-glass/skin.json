@@ -1,0 +1,134 @@
+{
+  "name": "Alfa Glass",
+  "author": "Pedrada",
+  "description": "Vidro escuro do Alfa na Steam: cocô dourado (ou o símbolo que você escolher) no lugar do logo, abas e lateral de vidro, capas com cantos e brilho, botão Jogar pulsando. Animações leves que param sozinhas com jogo rodando (precisa do plugin Alfa na Steam para animar).",
+  "version": "0.1.0",
+  "tags": [
+    "Alfa",
+    "vidro",
+    "glass",
+    "vermelho",
+    "animado"
+  ],
+  "UseDefaultPatches": false,
+  "Patches": [
+    {
+      "MatchRegexString": "^Steam$",
+      "TargetCss": "css/steam.css"
+    },
+    {
+      "MatchRegexString": ".*",
+      "TargetCss": "css/shared.css"
+    }
+  ],
+  "Conditions": {
+    "Acrílico (DWMX)": {
+      "description": "Deixa a área de trabalho aparecer atrás da janela (acrílico do Windows 11). Precisa do plugin Window Styler (DWMX) e dos efeitos de transparência do Windows ligados. Com um fundo escolhido no painel do Alfa, o fundo cobre o acrílico.",
+      "default": "não",
+      "values": {
+        "não": {},
+        "sim": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/dwmx.css"
+          }
+        }
+      }
+    },
+    "Cor de destaque": {
+      "description": "Cor do símbolo, das abas, da seleção e do botão Jogar. Com o plugin Alfa na Steam ligado, vale a cor escolhida no painel do Alfa.",
+      "default": "Vermelho Alfa",
+      "values": {
+        "Vermelho Alfa": {},
+        "Cor do Windows": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/acento-windows.css"
+          }
+        },
+        "Violeta": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/acento-violeta.css"
+          }
+        },
+        "Verde-água": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/acento-verde-agua.css"
+          }
+        },
+        "Âmbar": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/acento-ambar.css"
+          }
+        },
+        "Rosa": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/acento-rosa.css"
+          }
+        }
+      }
+    },
+    "Intensidade do vidro": {
+      "description": "Quanto os painéis de vidro tampam o fundo. Leve = mais transparente; Forte = mais fosco e o texto fica mais firme.",
+      "default": "Média",
+      "values": {
+        "Leve": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/vidro-leve.css"
+          }
+        },
+        "Média": {},
+        "Forte": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/vidro-forte.css"
+          }
+        }
+      }
+    },
+    "Animações": {
+      "description": "Teto das animações do próprio tema (capas, botão Jogar, Ω). Top = tudo (cascata, brilho, pulso do Jogar, símbolo respirando); Leve = só cascata e brilho no mouse; Desligadas = o tema não anima nada. As cenas das pastas e o fundo animado são do plugin: para parar tudo, escolha Desligado em Animações no painel do Alfa. Com jogo rodando nada anima em nenhum nível.",
+      "default": "Top",
+      "values": {
+        "Top": {},
+        "Leve": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/anim-leve.css"
+          }
+        },
+        "Desligadas": {
+          "TargetCss": {
+            "affects": [
+              ".*"
+            ],
+            "src": "css/options/anim-desligado.css"
+          }
+        }
+      }
+    }
+  }
+}

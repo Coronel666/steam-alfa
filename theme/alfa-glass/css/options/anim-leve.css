@@ -1,0 +1,5 @@
+/* Ômega Glass · opção "Animações: Leve" (teto: tira o que é só do nível top — brilho automático, pulso do Jogar, Ω respirando)
+   Só troca variáveis --omega-tema-*. É um teto: vale com ou sem o plugin (sem o plugin o tema já fica parado). */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+  --omega-tema-anim-top: none;
+}

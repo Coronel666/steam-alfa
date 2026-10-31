@@ -1,0 +1,7 @@
+/* Ômega Glass · opção "Animações: Desligadas" (nada do tema anima, nem transição de hover; cenas e fundo animado do plugin seguem o nível do painel Ω)
+   Só troca variáveis --omega-tema-*. É um teto: vale com ou sem o plugin (sem o plugin o tema já fica parado). */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+  --omega-tema-anim: none;
+  --omega-tema-anim-top: none;
+  --omega-tema-trans: 0s;
+}

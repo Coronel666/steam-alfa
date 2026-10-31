@@ -1,0 +1,6 @@
+/* Ômega Glass · opção "Cor de destaque: Cor do Windows" (variáveis que o Millennium põe em toda janela)
+   Só troca variáveis --omega-tema-*. Com o plugin Ômega na Steam ligado, o painel Ω manda
+   (ele escreve --omega-acento e --omega-desfoque inline no <html>). */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+  --omega-tema-acento: var(--SystemAccentColorLight2, var(--SystemAccentColor, #86d4ff));
+}

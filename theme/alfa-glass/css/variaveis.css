@@ -1,0 +1,49 @@
+/* Ômega Glass · variáveis (CONTRATO §2.4)
+   O plugin "Ômega na Steam" sobrescreve só --omega-acento, --omega-acento-rgb e --omega-desfoque,
+   com estilo inline no <html> da janela principal (inline ganha do :root).
+   --omega-tema-* vêm das opções do tema (skin.json, css/options/); sem opção, vale o padrão. */
+:root {
+  /* contrato */
+  --omega-glass: 1;
+  --omega-acento: var(--omega-tema-acento, #ff3b47);
+  --omega-acento-rgb: var(--omega-tema-acento-rgb, 255, 59, 71);
+  --omega-desfoque: 24px;
+  --omega-fundo-base: #060912;
+  --omega-vidro-rgb: 12, 20, 38;
+  --omega-vidro-alfa: var(--omega-tema-vidro, .55);
+  --omega-texto: #e7edf8;
+  --omega-texto-suave: #93a1ba;
+  --omega-linha: rgba(170, 200, 255, .16);
+  --omega-raio: 14px;
+
+  /* só do tema (derivadas) */
+  --omega-fundo-base-rgb: 6, 9, 18;
+  --omega-raio-p: 10px;
+  --omega-raio-pilula: 999px;
+  --omega-vidro: rgba(var(--omega-vidro-rgb), var(--omega-vidro-alfa));
+  --omega-vidro-topo: rgba(var(--omega-vidro-rgb), min(calc(var(--omega-vidro-alfa) + .08), .96));
+  --omega-vidro-denso: rgba(var(--omega-vidro-rgb), min(calc(var(--omega-vidro-alfa) + .32), .96));
+  --omega-vidro-claro: rgba(150, 180, 235, .07);
+  --omega-vidro-claro-2: rgba(150, 180, 235, .12);
+  --omega-brilho-topo: inset 0 1px 0 rgba(255, 255, 255, .07);
+  --omega-acento-claro: color-mix(in srgb, var(--omega-acento) 55%, #fff);
+  --omega-acento-fundo: color-mix(in srgb, var(--omega-acento) 18%, transparent);
+  --omega-acento-fundo-2: color-mix(in srgb, var(--omega-acento) 28%, transparent);
+  --omega-acento-borda: color-mix(in srgb, var(--omega-acento) 40%, transparent);
+  --omega-acento-tinta: #04121c;
+  --omega-perigo: #ff7a7a;
+  --omega-sombra-capa: 0 8px 22px rgba(0, 0, 0, .45), 0 0 0 1px rgba(170, 200, 255, .07);
+  --omega-sombra-menu: 0 18px 44px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .06);
+  --omega-curva: cubic-bezier(.2, .7, .2, 1);
+  --omega-trans: var(--omega-tema-trans, .18s);
+  /* o Ω (mesmo desenho do img/omega.svg, sem a moldura) embutido: mask-image busca com CORS e o
+     CSS vem de millennium.host, outra origem que a janela da Steam; data: não depende disso */
+  --omega-mascara-omega: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12.4%201.8c2.4.9%203.4%202.6%202.6%204.4H9.3c-.2-1.8%201-3.3%203.1-4.4zM9.7%206.9h4.6a2.2%201.7%200%200%201%200%203.4H9.7a2.2%201.7%200%200%201%200-3.4zM7.4%2011h9.2a2.4%202.1%200%200%201%200%204.2H7.4a2.4%202.1%200%200%201%200-4.2zM5.4%2015.9h13.2a3.5%203.05%200%200%201%200%206.1H5.4a3.5%203.05%200%200%201%200-6.1z%22%2F%3E%3C%2Fsvg%3E");
+  --omega-simbolo-cor: #f0c35a;
+}
+
+/* transições de hover/foco: zeradas com movimento reduzido ou nível "desligado" */
+@media (prefers-reduced-motion: reduce) {
+  :root { --omega-trans: 0s; }
+}
+:root.omega-anim-desligado { --omega-trans: 0s; }

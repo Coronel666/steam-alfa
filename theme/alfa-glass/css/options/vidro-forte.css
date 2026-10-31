@@ -1,0 +1,5 @@
+/* Ômega Glass · opção "Intensidade do vidro: Forte" (painéis mais foscos, texto mais firme)
+   Só troca --omega-tema-vidro (opacidade da tinta dos painéis). O plugin não mexe nela: vale sempre. */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+  --omega-tema-vidro: .74;
+}

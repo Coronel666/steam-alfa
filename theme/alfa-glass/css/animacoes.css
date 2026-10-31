@@ -1,0 +1,113 @@
+/* Ômega Glass · animações (CONTRATO §2.4 e §3.3) — importado por shared.css
+   Regras de ouro ("levinha", FPS em primeiro lugar):
+   - @keyframes só com transform e opacity (nada de filter, box-shadow, tamanho ou posição).
+   - Toda animação fica atrás de html.omega-anim-(leve|top):not(.omega-pausado) e de
+     prefers-reduced-motion: no-preference. Sem o plugin não há classe: o tema fica parado.
+   - omega-jogo-rodando também para tudo (já vem pelo omega-pausado; aqui é cinto + suspensório).
+   - Pulsos com variação de opacidade ≤ 0,15 e período ≥ 3 s (fotossensíveis).
+   - Os nomes saem de var(--omega-tema-anim…) para a opção "Animações" do tema poder baixar o nível. */
+
+@keyframes omega-entra {
+  from { opacity: 0; transform: translate3d(0, 14px, 0) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes omega-brilho {
+  0% { opacity: 0; transform: translate3d(-130%, 0, 0) skewX(-16deg); }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(260%, 0, 0) skewX(-16deg); }
+}
+
+@keyframes omega-pulso {
+  0% { opacity: .15; transform: scale(1); }
+  70% { opacity: 0; transform: scale(1.08, 1.4); }
+  100% { opacity: 0; transform: scale(1.08, 1.4); }
+}
+
+@keyframes omega-respira {
+  0% { opacity: .85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.07); }
+  100% { opacity: .85; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(:root:not(.MillenniumWindow_SteamBrowser)) {
+
+    /* ── leve e top ── */
+    &.omega-anim-leve:not(.omega-pausado):not(.omega-jogo-rodando),
+    &.omega-anim-top:not(.omega-pausado):not(.omega-jogo-rodando) {
+
+      /* cascata ao entrar em Início / Coleções / coleção (só durante omega-entrando: a grade é virtualizada)
+         atraso = posição na fileira + posição da fileira, teto 12 × 35 ms */
+      &.omega-entrando .MainPanel .Draggable > .LibraryItemBox,
+      &.omega-entrando .MainPanel .Collection.Focusable {
+        animation-name: var(--omega-tema-anim, omega-entra);
+        animation-duration: 420ms;
+        animation-timing-function: var(--omega-curva);
+        animation-fill-mode: both;
+        animation-delay: calc(min(var(--omega-ia, 1) + var(--omega-ib, 1) - 2, 12) * 35ms);
+      }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(2) { --omega-ia: 2; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(3) { --omega-ia: 3; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(4) { --omega-ia: 4; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(5) { --omega-ia: 5; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(6) { --omega-ia: 6; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(7) { --omega-ia: 7; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(8) { --omega-ia: 8; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(9) { --omega-ia: 9; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(10) { --omega-ia: 10; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(11) { --omega-ia: 11; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(12) { --omega-ia: 12; }
+      &.omega-entrando .MainPanel :is(.Draggable, .Collection):nth-child(n+13) { --omega-ia: 13; }
+      &.omega-entrando .MainPanel :nth-child(2) > :is(.Draggable, .Collection) { --omega-ib: 2; }
+      &.omega-entrando .MainPanel :nth-child(3) > :is(.Draggable, .Collection) { --omega-ib: 3; }
+      &.omega-entrando .MainPanel :nth-child(4) > :is(.Draggable, .Collection) { --omega-ib: 4; }
+      &.omega-entrando .MainPanel :nth-child(5) > :is(.Draggable, .Collection) { --omega-ib: 5; }
+      &.omega-entrando .MainPanel :nth-child(6) > :is(.Draggable, .Collection) { --omega-ib: 6; }
+      &.omega-entrando .MainPanel :nth-child(7) > :is(.Draggable, .Collection) { --omega-ib: 7; }
+      &.omega-entrando .MainPanel :nth-child(8) > :is(.Draggable, .Collection) { --omega-ib: 8; }
+      &.omega-entrando .MainPanel :nth-child(9) > :is(.Draggable, .Collection) { --omega-ib: 9; }
+      &.omega-entrando .MainPanel :nth-child(10) > :is(.Draggable, .Collection) { --omega-ib: 10; }
+      &.omega-entrando .MainPanel :nth-child(11) > :is(.Draggable, .Collection) { --omega-ib: 11; }
+      &.omega-entrando .MainPanel :nth-child(12) > :is(.Draggable, .Collection) { --omega-ib: 12; }
+      &.omega-entrando .MainPanel :nth-child(n+13) > :is(.Draggable, .Collection) { --omega-ib: 13; }
+
+      /* brilho passando na capa quando o mouse (ou o foco) chega nela */
+      .MainPanel .Draggable > .LibraryItemBox:is(:hover, :focus-visible)::after {
+        animation-name: var(--omega-tema-anim, omega-brilho);
+        animation-duration: 1.1s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: 1;
+      }
+    }
+
+    /* ── só top ── */
+    &.omega-anim-top:not(.omega-pausado):not(.omega-jogo-rodando) {
+
+      /* brilho automático: o plugin marca 1 capa visível a cada 5 s, por 1,2 s */
+      .MainPanel .Draggable > .LibraryItemBox[data-omega-brilho]::after {
+        animation-name: var(--omega-tema-anim-top, omega-brilho);
+        animation-duration: 1.1s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1;
+      }
+
+      /* botão Jogar pulsando suave (anel saindo do botão) */
+      .MainPanel .PlayButtonContainer:not(.Disabled):has(.SVGIcon_Play)::after {
+        animation-name: var(--omega-tema-anim-top, omega-pulso);
+        animation-duration: 3s;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+      }
+
+      /* logo Ω respirando */
+      .RootMenuBar .RootMenuButton .SteamButton::before {
+        animation-name: var(--omega-tema-anim-top, omega-respira);
+        animation-duration: 4s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+      }
+    }
+  }
+}

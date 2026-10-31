@@ -1,0 +1,7 @@
+/* Ômega Glass · opção "Cor de destaque: Verde-água"
+   Só troca variáveis --omega-tema-*. Com o plugin Ômega na Steam ligado, o painel Ω manda
+   (ele escreve --omega-acento e --omega-desfoque inline no <html>). */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+  --omega-tema-acento: #6ff0d2;
+  --omega-tema-acento-rgb: 111, 240, 210;
+}

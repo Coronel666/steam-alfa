@@ -1,0 +1,381 @@
+/* Ômega Glass · janela principal (patch ^Steam$)
+   Seletores legíveis do Millennium 3.4+ (reclass), sempre com pai único; nunca hash.
+   "Pinta, não redimensiona": cor, borda (via sombra interna) e raio; tamanho de menu/diálogo fica como a Steam mediu.
+   Vidro: containers opacos ficam transparentes e só 2 painéis têm backdrop-filter (nunca vidro dentro de vidro).
+   Nunca estiliza #omega-fundo nem #omega-cena (o plugin põe o estilo inline deles).
+   Animações ficam em animacoes.css; aqui só o estado parado (seguro sem o plugin). */
+
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+
+  /* ── camadas: a Steam por cima do fundo (z 0) e da cena (z 1) do plugin ── */
+  &.MillenniumWindow_MainSteamWindow #popup_target {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── fundo da janela: cor base + fundo padrão (sem o plugin) com véu de 40% ── */
+  &.MillenniumWindow_MainSteamWindow {
+    background: var(--omega-fundo-base);
+  }
+  &.MillenniumWindow_MainSteamWindow body.DesktopUI {
+    background:
+      linear-gradient(rgba(var(--omega-fundo-base-rgb), .4), rgba(var(--omega-fundo-base-rgb), .4)),
+      url('../fundos/omega-vidro.jpg') center / cover no-repeat var(--omega-fundo-base) !important;
+    color: var(--omega-texto);
+    /* todas as barras de progresso da Steam leem estas duas */
+    --color-progress-bar-foreground: var(--omega-acento);
+    --color-progress-bar-background: rgba(170, 200, 255, .14);
+  }
+  /* o plugin está mostrando o fundo dele: só a cor base (não decodifica dois fundos) */
+  &.MillenniumWindow_MainSteamWindow.omega-fundo-ativo body.DesktopUI {
+    background: var(--omega-fundo-base) !important;
+  }
+
+  /* ── containers opacos da Steam ficam transparentes (o vidro aparece por trás) ── */
+  &.MillenniumWindow_MainSteamWindow :is(
+    #popup_target,
+    .FocusNavigationRoot,
+    .Wrapper.ForceOpaqueBackground,
+    .OuterFrame,
+    .OuterFrame .TopBar > .TitleBar,
+    .SuperNavBar,
+    .ContentFrame,
+    .LocalContentContainer,
+    .LeftListSizableContainer,
+    .MainPanel,
+    .AppDetailsMain,
+    .AppDetailsMain > .Container,
+    .MainPanel .ScrollContainer,
+    .MainPanel .OuterContainer,
+    .LibraryHome,
+    .BottomBarContainer
+  ) {
+    background: transparent !important;
+    background-image: none !important;
+  }
+
+  /* ── barra de cima de vidro (tinta, sem blur: blur só nos 2 painéis) ── */
+  .OuterFrame .TopBar {
+    background: linear-gradient(180deg, rgba(var(--omega-vidro-rgb), .80), rgba(var(--omega-vidro-rgb), .55)) !important;
+    box-shadow: inset 0 -1px 0 var(--omega-linha) !important;
+  }
+
+  /* ── logo Ω no lugar do logo da Steam (menu "Steam" da barra de cima) ── */
+  .RootMenuBar .RootMenuButton .SteamButton {
+    font-size: 0 !important;
+    gap: 7px !important;
+  }
+  .RootMenuBar .RootMenuButton .SteamButton .Logo {
+    display: none !important;
+  }
+  .RootMenuBar .RootMenuButton .SteamButton::before {
+    content: "";
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    background: var(--omega-simbolo-cor, var(--omega-acento)); /* edição Alfa: o cocô é dourado */
+    -webkit-mask: var(--omega-mascara-omega) center / contain no-repeat;
+    mask: var(--omega-mascara-omega) center / contain no-repeat;
+  }
+  .RootMenuBar .RootMenuButton .SteamButton::after {
+    content: "Alfa";
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  /* ── abas LOJA / BIBLIOTECA / COMUNIDADE em pílula ── */
+  .SuperNavBar .SuperNavMenu {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: .08em;
+    padding: 0 3px !important;
+  }
+  .SuperNavBar .SuperNavMenu .MenuButton {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 5px 14px !important;
+    border-radius: var(--omega-raio-pilula) !important;
+    color: var(--omega-texto-suave) !important;
+    text-shadow: none !important;
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: color var(--omega-trans) ease-out, background-color var(--omega-trans) ease-out !important;
+  }
+  .SuperNavBar .SuperNavMenu .MenuButton::after {
+    display: none !important; /* sublinhado azul da Steam */
+  }
+  .SuperNavBar .SuperNavMenu:hover .MenuButton {
+    color: #fff !important;
+    background-color: var(--omega-vidro-claro);
+  }
+  .SuperNavBar .SuperNavMenu.Selected .MenuButton {
+    color: var(--omega-acento-claro) !important;
+    background-color: var(--omega-acento-fundo) !important;
+    box-shadow: inset 0 0 0 1px var(--omega-acento-borda), 0 0 18px color-mix(in srgb, var(--omega-acento) 22%, transparent);
+  }
+
+  /* ── os 2 painéis de vidro: lateral da biblioteca e painel principal ── */
+  .LeftListSizableContainer > .Container,
+  .MainPanel > .AppDetailsTransitionGroup {
+    background: linear-gradient(165deg, var(--omega-vidro-topo), var(--omega-vidro)) !important;
+    -webkit-backdrop-filter: blur(var(--omega-desfoque)) saturate(1.3) !important;
+    backdrop-filter: blur(var(--omega-desfoque)) saturate(1.3) !important;
+  }
+  .LeftListSizableContainer > .Container {
+    border-start-end-radius: var(--omega-raio);
+    box-shadow: inset -1px 0 0 var(--omega-linha), var(--omega-brilho-topo) !important;
+  }
+  .MainPanel > .AppDetailsTransitionGroup {
+    border-start-start-radius: var(--omega-raio);
+    box-shadow: inset 1px 0 0 var(--omega-linha), var(--omega-brilho-topo) !important;
+  }
+  /* fundo se mexendo atrás (GIF/WebP animado, ou fundo animado sem cena): sem blur nos 2 painéis
+     (seria refeito a cada quadro do fundo) e tinta um pouco mais densa no lugar do desfoque.
+     A classe html.omega-fundo-movendo é do plugin; sem ela nada muda. Fica antes da regra da cena
+     (mesma força): com cena ativa, o painel principal segue a tinta .30 da cena. */
+  &.omega-fundo-movendo :is(.LeftListSizableContainer > .Container, .MainPanel > .AppDetailsTransitionGroup) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(var(--omega-vidro-rgb), min(calc(var(--omega-vidro-alfa) + .15), .96)) !important;
+  }
+  /* cena animada atrás: sem blur (seria refeito a cada quadro) e mais transparente */
+  &.omega-cena-ativa .MainPanel > .AppDetailsTransitionGroup {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(var(--omega-vidro-rgb), .30) !important;
+  }
+  /* divisória entre lista e painel */
+  .LibraryWindowDivider {
+    background-color: transparent !important;
+  }
+  .LibraryWindowDivider.Sizable:hover,
+  .IsResizingLeftList .LibraryWindowDivider {
+    background-color: var(--omega-acento-borda) !important;
+  }
+
+  /* ── lateral: botão Início, busca e lista ── */
+  .GameListHomeAndSearch .HomeBox .Bar {
+    background-color: var(--omega-vidro-claro) !important;
+    border-color: var(--omega-linha) !important;
+    border-radius: var(--omega-raio-p) !important;
+    color: var(--omega-texto) !important;
+    transition: background-color var(--omega-trans) ease-out;
+  }
+  .GameListHomeAndSearch .HomeBox .Bar:hover {
+    background-color: var(--omega-vidro-claro-2) !important;
+  }
+  .GameListHomeAndSearch .HomeBox .Bar.Selected {
+    background-color: var(--omega-acento-fundo) !important;
+    border-color: var(--omega-acento-borda) !important;
+  }
+  /* marca d'água: o Ω no lugar do desenho da Steam */
+  .GameListHomeAndSearch .HomeBox .Bar .Icon svg {
+    display: none !important;
+  }
+  .GameListHomeAndSearch .HomeBox .Bar .Icon::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 12px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    background: var(--omega-simbolo-cor, var(--omega-acento));
+    opacity: .75;
+    -webkit-mask: var(--omega-mascara-omega) center / contain no-repeat;
+    mask: var(--omega-mascara-omega) center / contain no-repeat;
+  }
+  .LeftListSizableContainer .SearchInput .DialogTextInputBase {
+    background-color: var(--omega-vidro-claro) !important; /* só a cor: a lupa é background-image da Steam */
+    border-radius: var(--omega-raio-p) !important;
+    color: var(--omega-texto) !important;
+  }
+  .LeftListSizableContainer .SearchInput .DialogTextInputBase:hover {
+    background-color: var(--omega-vidro-claro-2) !important;
+    box-shadow: none !important;
+  }
+  .LeftListSizableContainer .SearchInput .DialogTextInputBase:focus {
+    box-shadow: inset 0 0 0 1px var(--omega-acento-borda) !important;
+  }
+  .LeftListSizableContainer .AdvancedSearchButton {
+    background-color: var(--omega-vidro-claro) !important;
+    border-radius: var(--omega-raio-p) !important;
+  }
+  .LeftListSizableContainer .ReactVirtualized__Grid__innerScrollContainer .Container:hover {
+    background-color: var(--omega-vidro-claro-2) !important;
+  }
+  .LeftListSizableContainer .ReactVirtualized__Grid__innerScrollContainer :is(.Selected.Container, .Selected .Container) {
+    background-color: var(--omega-acento-fundo-2) !important;
+    box-shadow: inset 2px 0 0 var(--omega-acento) !important;
+    color: #fff !important;
+  }
+
+  /* ── página Coleções ── */
+  .MainPanel .Collection.Focusable,
+  .MainPanel .Collection.NewCollection {
+    background: var(--omega-vidro-denso) !important;
+    border-radius: var(--omega-raio) !important;
+    box-shadow: var(--omega-sombra-capa) !important;
+    transition-property: transform !important;
+    transition-duration: var(--omega-trans) !important;
+    transition-timing-function: var(--omega-curva) !important;
+  }
+  .MainPanel .Collection.Focusable:hover {
+    transform: translate3d(0, -3px, 0);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .5), 0 0 0 1px var(--omega-acento-borda) !important;
+  }
+  .MainPanel .Collection .CollectionLabel {
+    color: var(--omega-texto) !important;
+  }
+
+  /* ── cabeçalho de uma coleção e cabeçalhos grudados da grade ── */
+  .MainPanel .YourCollection .CollectionName,
+  .MainPanel .OuterContainer .CollectionName {
+    color: #fff !important;
+    letter-spacing: .02em;
+  }
+  .MainPanel .OuterContainer .SectionCount {
+    color: var(--omega-acento) !important;
+  }
+  .MainPanel .AppGridSectionHeader::after {
+    background: rgba(var(--omega-vidro-rgb), .92) !important;
+    box-shadow: inset 0 -1px 0 var(--omega-linha) !important;
+  }
+
+  /* ── capas: cantos, sombra e contorno no hover ── */
+  .MainPanel .Draggable > .LibraryItemBox {
+    border-radius: var(--omega-raio-p) !important;
+    border-color: transparent !important;
+    box-shadow: var(--omega-sombra-capa) !important;
+  }
+  .MainPanel .Draggable > .LibraryItemBox:hover {
+    outline: 1px solid var(--omega-acento-borda);
+  }
+  /* faixa de brilho: parada e invisível; animacoes.css passa ela no hover e no data-omega-brilho */
+  .MainPanel .Draggable > .LibraryItemBox::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 55%;
+    z-index: 11;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate3d(-130%, 0, 0) skewX(-16deg);
+    background: linear-gradient(100deg, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, 0) 85%);
+  }
+
+  /* ── botão Jogar (estado pelo ícone: Play / X) ── */
+  .MainPanel .PlayButtonContainer > .ButtonChild {
+    border-radius: 0 !important;
+  }
+  .MainPanel .PlayButtonContainer > .ButtonChild:first-child {
+    border-start-start-radius: var(--omega-raio-p) !important;
+    border-end-start-radius: var(--omega-raio-p) !important;
+  }
+  .MainPanel .PlayButtonContainer > .ButtonChild:last-child {
+    border-start-end-radius: var(--omega-raio-p) !important;
+    border-end-end-radius: var(--omega-raio-p) !important;
+  }
+  /* instalar / atualizar / outros: vidro com acento (nunca no .Disabled da Steam) */
+  .MainPanel .PlayButtonContainer:not(.Disabled) > .ButtonChild {
+    background: var(--omega-acento-fundo-2) !important;
+    color: #fff !important;
+    box-shadow: inset 0 0 0 1px var(--omega-acento-borda) !important;
+  }
+  /* hover próprio (o !important acima travava o hover da Steam); antes das regras do Jogar e do Parar,
+     que têm a mesma força e ganham por virem depois */
+  .MainPanel .PlayButtonContainer:not(.Disabled) > .ButtonChild:hover {
+    background: color-mix(in srgb, var(--omega-acento) 42%, transparent) !important;
+  }
+  /* desabilitado (pré-carregado, indisponível, ação bloqueada): vidro cinza apagado, sem acento */
+  .MainPanel .PlayButtonContainer.Disabled > .ButtonChild {
+    background: var(--omega-vidro-claro) !important;
+    color: rgba(231, 237, 248, .45) !important;
+    box-shadow: inset 0 0 0 1px var(--omega-linha) !important;
+    cursor: default;
+  }
+  .MainPanel .PlayButtonContainer.Disabled > .ButtonChild svg {
+    opacity: .5;
+  }
+  /* pronto pra jogar: azul-gelo com brilho parado */
+  .MainPanel .PlayButtonContainer:not(.Disabled):is(.Green, :has(.SVGIcon_Play)) {
+    border-radius: var(--omega-raio-p);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--omega-acento) 32%, transparent);
+  }
+  .MainPanel .PlayButtonContainer:not(.Disabled):is(.Green, :has(.SVGIcon_Play)) > .ButtonChild {
+    background: linear-gradient(135deg, var(--omega-acento-claro), var(--omega-acento)) !important;
+    color: var(--omega-acento-tinta) !important;
+    box-shadow: none !important;
+  }
+  .MainPanel .PlayButtonContainer:not(.Disabled):is(.Green, :has(.SVGIcon_Play)) > .ButtonChild:hover {
+    background: linear-gradient(135deg, #fff, var(--omega-acento-claro)) !important;
+  }
+  .MainPanel .PlayButtonContainer:not(.Disabled):is(.Green, :has(.SVGIcon_Play)) > .ButtonChild svg {
+    fill: var(--omega-acento-tinta) !important;
+  }
+  /* jogo rodando (botão Parar) */
+  .MainPanel .PlayButtonContainer:not(.Disabled):has(.SVGIcon_X_Line) > .ButtonChild {
+    background: rgba(255, 122, 122, .16) !important;
+    color: #ffd9d9 !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 122, 122, .38) !important;
+  }
+  .MainPanel .PlayButtonContainer:not(.Disabled):has(.SVGIcon_X_Line) > .ButtonChild:hover {
+    background: rgba(255, 122, 122, .28) !important;
+  }
+  /* anel do pulso: parado e invisível; animacoes.css pulsa no nível top (nunca no desabilitado) */
+  .MainPanel .PlayButtonContainer:not(.Disabled):has(.SVGIcon_Play)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--omega-raio-p);
+    box-shadow: 0 0 0 2px var(--omega-acento), 0 0 18px 2px var(--omega-acento);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ── página do jogo: barra que gruda ao rolar ── */
+  .MainPanel .PlayBar.ShowPlayBar {
+    background: var(--omega-vidro-denso) !important;
+    box-shadow: inset 0 -1px 0 var(--omega-linha) !important;
+  }
+
+  /* ── barra de baixo (downloads / amigos) ── */
+  .BottomBarContainer .BottomBar {
+    background: linear-gradient(0deg, rgba(var(--omega-vidro-rgb), .82), rgba(var(--omega-vidro-rgb), .58)) !important;
+    box-shadow: inset 0 1px 0 var(--omega-linha) !important;
+  }
+
+  /* ── barras de rolagem: só cor (largura é da Steam) ── */
+  :is(.LeftListSizableContainer, .MainPanel) ::-webkit-scrollbar-thumb {
+    background-color: rgba(170, 200, 255, .20) !important;
+  }
+  :is(.LeftListSizableContainer, .MainPanel) ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--omega-acento-borda) !important;
+  }
+  :is(.LeftListSizableContainer, .MainPanel) ::-webkit-scrollbar-corner {
+    background-color: transparent !important;
+  }
+
+  /* ── foco visível (teclado e controle) ── */
+  :is(
+    .MainPanel .Draggable > .LibraryItemBox,
+    .MainPanel .Collection.Focusable,
+    .GameListHomeAndSearch .HomeBox .Bar,
+    .MainPanel .PlayButtonContainer > .ButtonChild,
+    .SuperNavBar .SuperNavMenu
+  ):is(:focus-visible, .gpfocus) {
+    outline: 2px solid var(--omega-acento) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* seleção de texto */
+  body.DesktopUI ::selection {
+    background: var(--omega-acento-fundo-2);
+    color: #fff;
+  }
+}

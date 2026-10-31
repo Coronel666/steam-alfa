@@ -1,0 +1,68 @@
+/* Ômega Glass · todas as janelas do cliente (patch .*)
+   O Millennium também registra este arquivo como hook de URL das páginas web (loja/comunidade):
+   por isso tudo fica dentro de :where(:root:not(.MillenniumWindow_SteamBrowser)) e a loja fica intocada.
+   Menus e diálogos: só cor, borda (sombra interna) e raio; nunca tamanho (a Steam mede antes do tema). */
+@import url('variaveis.css');
+@import url('animacoes.css');
+
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+
+  /* ── menus de contexto (janela própria ou desenhados dentro da janela principal) ── */
+  body.ContextMenuPopupBody .contextMenu,
+  body.DesktopUI .contextMenu {
+    background: linear-gradient(180deg, rgba(18, 29, 52, .98), rgba(8, 13, 26, .99)) !important;
+    box-shadow: var(--omega-sombra-menu), inset 0 0 0 1px var(--omega-linha) !important;
+    color: var(--omega-texto);
+  }
+  /* raio só dentro da janela: a janela própria do menu tem cantos retos */
+  body.DesktopUI .contextMenu {
+    border-radius: var(--omega-raio-p) !important;
+  }
+  .contextMenu .contextMenuItem:not(.disabled):is(:hover, .active) {
+    background: var(--omega-acento-fundo-2) !important;
+    color: #fff !important;
+  }
+
+  /* ── janelas de diálogo (Configurações, Propriedades…) ── */
+  body.ModalDialogBody:not(.OverlayPopupBody) .PopupFullWindow {
+    background: radial-gradient(120% 90% at 15% 0%, #14233f 0%, #0a1122 55%, var(--omega-fundo-base) 100%) !important;
+  }
+  body.ModalDialogBody:not(.OverlayPopupBody) :is(.ModalPosition, .ModalPosition_Content, .DialogContent) {
+    background: transparent !important;
+    background-image: none !important;
+  }
+  body.ModalDialogBody:not(.OverlayPopupBody) .PagedSettingsDialog .PagedSettingsDialog_PageListColumn {
+    background: rgba(var(--omega-vidro-rgb), .55) !important;
+    box-shadow: inset -1px 0 0 var(--omega-linha);
+  }
+  body.ModalDialogBody:not(.OverlayPopupBody) .PagedSettingsDialog .PagedSettingsDialog_PageListItem:not(.Active):hover {
+    background-color: var(--omega-vidro-claro-2) !important;
+    color: #fff !important;
+  }
+  body.ModalDialogBody:not(.OverlayPopupBody) .PagedSettingsDialog .PagedSettingsDialog_PageListItem.Active {
+    background-color: var(--omega-acento-fundo-2) !important;
+    box-shadow: inset 2px 0 0 var(--omega-acento);
+    color: #fff !important;
+  }
+
+  /* ── botões e campos (janela principal e diálogos; nunca o overlay do jogo) ── */
+  :is(body.DesktopUI, body.ModalDialogBody:not(.OverlayPopupBody)) .DialogButton {
+    border-radius: 8px !important;
+  }
+  :is(body.DesktopUI, body.ModalDialogBody:not(.OverlayPopupBody)) .DialogButton.Primary:not(:disabled):not(.Disabled) {
+    background: linear-gradient(135deg, var(--omega-acento-claro), var(--omega-acento)) !important;
+    color: var(--omega-acento-tinta) !important;
+  }
+  :is(body.DesktopUI, body.ModalDialogBody:not(.OverlayPopupBody)) .DialogButton.Primary:not(:disabled):not(.Disabled):hover {
+    background: linear-gradient(135deg, #fff, var(--omega-acento-claro)) !important;
+  }
+  :is(body.DesktopUI, body.ModalDialogBody:not(.OverlayPopupBody)) .DialogTextInputBase:focus {
+    box-shadow: inset 0 0 0 1px var(--omega-acento-borda) !important;
+  }
+
+  /* ── foco visível ── */
+  :is(body.DesktopUI, body.ModalDialogBody:not(.OverlayPopupBody), body.ContextMenuPopupBody) :is(.DialogButton, .contextMenuItem):is(:focus-visible, .gpfocus) {
+    outline: 2px solid var(--omega-acento) !important;
+    outline-offset: 2px !important;
+  }
+}

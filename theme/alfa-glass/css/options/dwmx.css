@@ -1,0 +1,24 @@
+/* Ômega Glass · opção "Acrílico (DWMX)" = sim
+   Só vale com o plugin Window Styler ligado (o Millennium põe html.dwmx) e com
+   "Efeitos de transparência" do Windows ligados. Opções carregam ANTES do CSS principal:
+   por isso os seletores daqui têm mais especificidade (html.dwmx.MillenniumWindow_*). */
+:where(:root:not(.MillenniumWindow_SteamBrowser)) {
+
+  /* janela principal: deixa o acrílico passar, com tinta própria (o DWMX usa cor 0) */
+  &.dwmx.MillenniumWindow_MainSteamWindow,
+  &.dwmx.MillenniumWindow_MainSteamWindow body.DesktopUI {
+    background: rgba(var(--omega-fundo-base-rgb), .5) !important;
+  }
+
+  /* acrílico já desfoca a área de trabalho: sem o fundo do plugin, os painéis não desfocam de novo */
+  &.dwmx.MillenniumWindow_MainSteamWindow:not(.omega-fundo-ativo) :is(.LeftListSizableContainer > .Container, .MainPanel > .AppDetailsTransitionGroup) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(var(--omega-vidro-rgb), calc(var(--omega-vidro-alfa) * .7)) !important;
+  }
+
+  /* Configurações e Propriedades do jogo */
+  &.dwmx:is(.MillenniumWindow_Settings, .MillenniumWindow_GameProperties) body.ModalDialogBody .PopupFullWindow {
+    background: rgba(var(--omega-fundo-base-rgb), .62) !important;
+  }
+}
