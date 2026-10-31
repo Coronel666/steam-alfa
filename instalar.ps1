@@ -101,7 +101,7 @@
     Ok "pacote pronto $versao"
     $antes = ''
     try { $antes = (Get-Content (Join-Path $Base 'instalado.json') -Raw | ConvertFrom-Json).versao } catch {}
-    if ($antes -and $antes -ne $versao) { Ok "você tinha a versão $antes: é uma ATUALIZAÇÃO" }
+    if ($antes -and $antes -ne $versao) { Ok "você tinha a versão ${antes}: é uma ATUALIZAÇÃO" }
     elseif ($antes) { Ok 'você já está nesta versão: reinstalando por cima' }
 
     Passo 'instalando: a Steam fecha sozinha, recebe o Alfa e abre de novo (não abra jogo agora)'
