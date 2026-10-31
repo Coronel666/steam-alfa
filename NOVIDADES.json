@@ -1,16 +1,22 @@
 {
-  "versao": "20261031.0237",
-  "titulo": "Botão Jogar do seu jeito, valor da conta sem a família e símbolo com qualquer emoji",
+  "versao": "20261031.0326",
+  "titulo": "Valor da família certeiro (igual em qualquer PC)",
   "itens": [
-    "Botão Jogar personalizável: estilo (sólido, vidro, neon, degradê, contorno, verde Steam), cor, formato, texto, tamanho e pulso",
-    "Tempo de jogo do lado do Jogar: mostrar, destacar ou esconder",
-    "Quanto a conta vale: \"Só a minha conta\" x \"Com a família\" e o ranking de quem é o mais rico da família, com histórico",
-    "Símbolo: 32 emojis, qualquer emoji ou letra que você digitar, ou uma imagem sua",
-    "Plano de fundo voltou a trocar no Alfa",
-    "Pastas por série corrigidas (a Steam juntava jogos da mesma empresa, tipo Batman com Hogwarts) e as pastas do Alfa se arrumam sozinhas ao organizar de novo",
-    "Botões das Pastas e da conta agora pegam no clique inteiro"
+    "Quanto a conta vale agora pega a lista da família direto da Steam: o valor de cada pessoa sai igual no seu PC e no PC dos outros",
+    "Jogo que duas pessoas têm conta para as duas (antes contava só para o dono daquele PC, e os jogos que não podem ser emprestados nem apareciam)",
+    "Abra a Loja da Steam uma vez depois de atualizar (ou clique em \"Ler a família na Steam\" na tela da conta) para buscar a lista; ela se atualiza sozinha a cada 6 horas",
+    "O histórico do ranking recomeça do zero, já com os valores certos"
   ],
   "historico": [
+    {
+      "titulo": "Valor da família certeiro (igual em qualquer PC)",
+      "itens": [
+        "Quanto a conta vale agora pega a lista da família direto da Steam: o valor de cada pessoa sai igual no seu PC e no PC dos outros",
+        "Jogo que duas pessoas têm conta para as duas (antes contava só para o dono daquele PC, e os jogos que não podem ser emprestados nem apareciam)",
+        "Abra a Loja da Steam uma vez depois de atualizar (ou clique em \"Ler a família na Steam\" na tela da conta) para buscar a lista; ela se atualiza sozinha a cada 6 horas",
+        "O histórico do ranking recomeça do zero, já com os valores certos"
+      ]
+    },
     {
       "titulo": "Botão Jogar do seu jeito, valor da conta sem a família e símbolo com qualquer emoji",
       "itens": [
